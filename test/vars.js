@@ -81,6 +81,15 @@ exports.vars = function () {
                 assert.equal($('#messages .msg .exp div').text(), '555');
                 msg.vars.x = 999;
                 assert.equal($('#messages .msg .exp div').text(), '999');
+                
+                c.require('jadeify')('msg.jade', {
+                    title : $('<b>').text('ahoy!'),
+                    body : '...',
+                }).appendTo($('#messages'));
+                
+                var b = $('#messages .msg .title div b');
+                assert.ok(b[0]);
+                assert.equal(b.text(), 'ahoy!');
             });
         });
     });
