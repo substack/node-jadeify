@@ -47,7 +47,24 @@ module.exports = function (opts, ext) {
             // eval but don't run the entries which are behind a
             // process.nextTick() which calls setTimeout
             var c = { setTimeout : function () {} };
-            vm.runInNewContext(fsrc, c);
+            try {
+                vm.runInNewContext(fsrc, c);
+            }
+            catch (err) {
+                if (err.constructor.name === 'SyntaxError') {
+                    var tmpFile = '/tmp/jadeify_error_' + Math.floor(
+                        Math.random() * Math.pow(2,32)
+                    ).toString(16) + '.js';
+                    fs.writeFileSync(tmpFile, fsrc);
+                    try {
+                        require(tmpFile);
+                    }
+                    catch (err) {
+                        throw err;
+                    }
+                }
+                else throw err;
+            }
             
             Object.keys(sources).forEach(function (pkg) {
                 if (!c.require.modules[pkg]) {
