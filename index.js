@@ -39,7 +39,7 @@ module.exports = function (opts, ext) {
         bundle.require({ jquery : 'jquery-browserify' });
         bundle.use(fileify('jadeify/views/index.js', viewdir, opts.ext));
         bundle.require(__dirname + '/jadeify.js', {
-            target : '/node_modules/jadeify'
+            target : '/node_modules/jadeify/index.js'
         });
     };
 };
