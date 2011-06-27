@@ -4,14 +4,7 @@ var Seq = require('seq');
 var vm = require('vm');
 
 var fileify = require('fileify');
-
 var browserify = require('browserify');
-var sources = {
-    jadeify : browserify.wrap('jadeify').source,
-    jquery : browserify.wrap('jquery-browserify', { name : 'jquery' }).source,
-    jade : browserify.wrap('jade').source,
-    traverse : browserify.wrap('traverse').source,
-};
 
 module.exports = function (opts, ext) {
     if (!opts) opts = {};
@@ -41,38 +34,12 @@ module.exports = function (opts, ext) {
     }
     if (!viewdir) throw new Error('No suitable views directory');
     
-    return function (src, next) {
-        fileify('jadeify/views', viewdir, opts.ext)
-        (src, function (fsrc, fnext) {
-            // eval but don't run the entries which are behind a
-            // process.nextTick() which calls setTimeout
-            var c = { setTimeout : function () {} };
-            try {
-                vm.runInNewContext(fsrc, c);
-            }
-            catch (err) {
-                if (err.constructor.name === 'SyntaxError') {
-                    var tmpFile = '/tmp/jadeify_error_' + Math.floor(
-                        Math.random() * Math.pow(2,32)
-                    ).toString(16) + '.js';
-                    fs.writeFileSync(tmpFile, fsrc);
-                    try {
-                        require(tmpFile);
-                    }
-                    catch (err) {
-                        throw err;
-                    }
-                }
-                else throw err;
-            }
-            
-            Object.keys(sources).forEach(function (pkg) {
-                if (!c.require.modules[pkg]) {
-                    fsrc += sources[pkg];
-                }
-            });
-            
-            next(fsrc);
+    return function (bundle) {
+        bundle.ignore([ 'stylus', 'markdown', 'discount', 'markdown-js' ]);
+        bundle.require({ jquery : 'jquery-browserify' });
+        bundle.use(fileify('jadeify/views/index.js', viewdir, opts.ext));
+        bundle.require(__dirname + '/jadeify.js', {
+            target : '/node_modules/jadeify'
         });
     };
 };
