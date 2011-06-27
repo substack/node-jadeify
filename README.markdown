@@ -10,14 +10,16 @@ For some expresso/connect/etc application `app`:
 
 ````javascript
 var browserify = require('browserify');
-var bundle = browserify();
-app.use(bundle);
-
 var jadeify = require('jadeify');
-bundle.use(jadeify(__dirname + '/views'));
+
+var bundle = browserify()
+    .use(jadeify(__dirname + '/views'))
+    .addEntry(__dirname + '/main.js')
+;
+app.use(bundle);
 ````
 
-Then in your browser-side javascript you can use `jadeify()`:
+Then in your browser-side main.js entry point you can use `jadeify()`:
 
 ````javascript
 var $ = require('jquery');
@@ -27,7 +29,6 @@ var msg = jadeify('msg.jade', {
     title : 'foo',
     body : 'bar baz quux'
 }).appendTo($('#messages'));
-
 ````
 
 [See here](https://github.com/substack/node-jadeify/tree/master/example/simple)
