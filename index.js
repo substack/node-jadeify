@@ -38,6 +38,15 @@ module.exports = function (opts, ext) {
         bundle.ignore([ 'stylus', 'markdown', 'discount', 'markdown-js' ]);
         bundle.require({ jquery : 'jquery-browserify' });
         bundle.use(fileify('jadeify/views/index.js', viewdir, opts.ext));
+        
+        Object.keys(bundle.files).forEach(function (key) {
+            var file = bundle.files[key];
+            if (file.target === '/node_modules/jadeify/package.json'
+            || file.target === '/node_modules/jadeify/empty.js') {
+                delete bundle.files[key];
+            }
+        });
+        
         bundle.require(__dirname + '/jadeify.js', {
             target : '/node_modules/jadeify/index.js'
         });

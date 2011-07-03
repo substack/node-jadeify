@@ -3,7 +3,7 @@ var vm = require('vm');
 var fs = require('fs');
 
 var browserify = require('browserify');
-var jadeify = require('jadeify');
+var jadeify = require('../');
 
 var jade = require('jade');
 var jsdom = require('jsdom');
