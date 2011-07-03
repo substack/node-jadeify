@@ -33,8 +33,15 @@ module.exports = function (file, vars, opts) {
         var elem = $('<div>')
             .css('display', 'inline')
             .attr('id', id)
-            .append(value)
         ;
+        
+        if (value instanceof $ || value instanceof window.HTMLElement
+        || typeof value === 'string') {
+            elem.append(value);
+        }
+        else {
+            elem.append(JSON.stringify(value));
+        }
         
         var fn = function () {
             Object.defineProperty(container.vars, key, {
