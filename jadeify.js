@@ -40,7 +40,7 @@ module.exports = function (file, vars, opts) {
             elem.append(value);
         }
         else {
-            elem.append(JSON.stringify(value));
+            elem.append(String(value));
         }
         
         var fn = function () {
