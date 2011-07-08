@@ -6,6 +6,10 @@ var vm = require('vm');
 var fileify = require('fileify');
 var browserify = require('browserify');
 
+var cache = JSON.parse(
+    fs.readFileSync(__dirname + '/build/_cache.js', 'utf8')
+);
+
 module.exports = function (opts, ext) {
     if (!opts) opts = {};
     if (typeof opts === 'string') {
@@ -35,7 +39,10 @@ module.exports = function (opts, ext) {
     if (!viewdir) throw new Error('No suitable views directory');
     
     return function (bundle) {
-        bundle.ignore([ 'stylus', 'markdown', 'discount', 'markdown-js' ]);
+        Object.keys(cache).forEach(function (key) {
+            if (!bundle.files[key]) bundle.files[key] = cache[key]
+        });
+        
         bundle.require({ jquery : 'jquery-browserify' });
         bundle.use(fileify('jadeify/views/index.js', viewdir, opts.ext));
         
@@ -45,10 +52,6 @@ module.exports = function (opts, ext) {
             || file.target === '/node_modules/jadeify/empty.js') {
                 delete bundle.files[key];
             }
-        });
-        
-        bundle.require(__dirname + '/jadeify.js', {
-            target : '/node_modules/jadeify/index.js'
         });
     };
 };
