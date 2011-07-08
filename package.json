@@ -1,6 +1,6 @@
 {
     "name" : "jadeify",
-    "version" : "0.2.2",
+    "version" : "0.3.0",
     "description" : "Browserify middleware to render jade templates browser-side",
     "main" : "index.js",
     "directories" : {
