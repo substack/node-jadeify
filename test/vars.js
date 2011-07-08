@@ -50,7 +50,7 @@ exports.vars = function () {
             assert.ok(msg instanceof $);
             
             assert.equal(
-                $('#messages .msg .title div').text(),
+                $('#messages .msg .title').text(),
                 'oh hello'
             );
             
@@ -59,32 +59,24 @@ exports.vars = function () {
                 'nice night for a test'
             );
             
-            msg.vars.title = 'BREAKING NEWS';
+            msg.find('.title').text('BREAKING NEWS');
             
             assert.equal(
-                $('#messages .msg .title div').text(),
+                $('#messages .msg .title').text(),
                 'BREAKING NEWS'
             );
             
-            // body doesn't use the $ in the template so it doesn't get
-            // modified...
-            msg.vars.body = '...';
-            assert.equal(
-                $('#messages .msg .body').text(),
-                'nice night for a test'
-            );
-            
             // expression test with calling $var()
-            assert.equal($('#messages .msg .exp div').text(), '555');
-            msg.vars.x = 999;
-            assert.equal($('#messages .msg .exp div').text(), '999');
+            assert.equal($('#messages .msg .exp').text(), '555');
+            msg.find('.exp').text(999);
+            assert.equal($('#messages .msg .exp').text(), '999');
             
             c.require('jadeify')('msg.jade', {
                 title : $('<b>').text('ahoy!'),
                 body : '...',
             }).appendTo($('#messages'));
             
-            var b = $('#messages .msg .title div b');
+            var b = $('#messages .msg .title b');
             assert.ok(b[0]);
             assert.equal(b.text(), 'ahoy!');
         });
