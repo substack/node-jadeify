@@ -18,8 +18,8 @@ $(window).ready(function () {
         }).appendTo($('#messages'));
         
         setTimeout(function () {
-            msg.vars.title = '[ deleted ]';
-            body.vars.text = 'This post is no longer available.';
+            msg.find('.title').text('[ deleted ]');
+            body.find('.text').text('This post is no longer available.');
         }, 5000);
         
         setTimeout(function () {
