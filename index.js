@@ -7,7 +7,7 @@ var fileify = require('fileify');
 var browserify = require('browserify');
 
 var cache = JSON.parse(
-    fs.readFileSync(__dirname + '/build/_cache.js', 'utf8')
+    fs.readFileSync(__dirname + '/_cache.js', 'utf8')
 );
 
 module.exports = function (opts, ext) {

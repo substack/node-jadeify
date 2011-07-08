@@ -16,4 +16,4 @@ bundle.require(__dirname + '/../jadeify.js', {
 delete bundle.files[viewStub];
 
 var fs = require('fs');
-fs.writeFileSync(__dirname + '/_cache.js', JSON.stringify(bundle.files));
+fs.writeFileSync(__dirname + '/../_cache.js', JSON.stringify(bundle.files));
