@@ -15,7 +15,14 @@ module.exports = function (opts, ext) {
     if (typeof opts === 'string') {
         opts = { views : opts };
     }
-    if (ext) opts.ext = ext;
+    if (ext && typeof ext === 'string') {
+        opts.ext = ext;
+    }
+    else if (typeof ext === 'object') {
+        Object.keys(ext).forEach(function (key) {
+            opts[key] = ext[key];
+        });
+    }
     
     var viewdirs = [ './views' ];
     
@@ -44,7 +51,7 @@ module.exports = function (opts, ext) {
         });
         
         bundle.require({ jquery : 'jquery-browserify' });
-        bundle.use(fileify('jadeify/views/index.js', viewdir, opts.ext));
+        bundle.use(fileify('jadeify/views/index.js', viewdir, opts));
         
         Object.keys(bundle.files).forEach(function (key) {
             var file = bundle.files[key];

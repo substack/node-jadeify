@@ -12,7 +12,7 @@ var browserify = require('browserify');
 var jadeify = require('jadeify');
 
 util.print('Generating bundle... ');
-var bundle = browserify().use(jadeify(__dirname + '/views'));
+var bundle = browserify().use(jadeify(__dirname + '/views', { watch : true }));
 bundle.addEntry(__dirname + '/static/main.js');
 app.use(bundle);
 console.log('done');
