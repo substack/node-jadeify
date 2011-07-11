@@ -34,6 +34,22 @@ var msg = jadeify('msg.jade', {
 [See here](https://github.com/substack/node-jadeify/tree/master/example/simple)
 for a more complete example.
 
+server-side methods
+===================
+
+jadeify(viewdir, opts or extension)
+-----------------------------------
+
+Use templates from `viewdir` or `opts.views` with file extension `extension` or
+`opts.extension` or otherwise any file.
+
+The options are passed along to
+[fileify](http://github.com/substack/node-fileify).
+
+One thing you might want to pass along to fileify is the watch parameter to
+update the jadeified view files when they change on disk without restarting the
+server.
+
 browser-side methods
 ====================
 
