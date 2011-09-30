@@ -20,5 +20,5 @@ module.exports = function (file, vars, opts) {
     });
     opts.locals.$ = $;
     
-    return $(jade.render(views[file], opts));
+    return $(jade.compile(views[file])(opts.locals));
 };

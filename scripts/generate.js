@@ -2,7 +2,7 @@
 
 var browserify = require('browserify');
 var bundle = browserify();
-bundle.ignore([ 'stylus', 'markdown', 'discount', 'markdown-js' ]);
+bundle.ignore([ 'stylus', 'markdown', 'discount', 'markdown-js', 'less' ]);
 
 var viewStub = Math.random();
 bundle.include(viewStub, '/node_modules/jadeify/views/index.js', '');
