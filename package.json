@@ -11,6 +11,7 @@
     "dependencies" : {
         "fileify" : "0.3.x",
         "jade" : "0.11.x",
+        "less" : "*",
         "traverse" : ">=0.3.5 <0.4",
         "deck" : "0.0.x",
         "jquery-browserify" : "1.6.1",
