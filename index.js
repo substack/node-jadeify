@@ -38,7 +38,7 @@ module.exports = function (opts, ext) {
     
     var viewdir = null;
     for (var i = 0; i < viewdirs.length; i++) {
-        if (path.existsSync(viewdirs[i])) {
+        if (fs.existsSync(viewdirs[i])) {
             viewdir = viewdirs[i];
             break;
         }
